@@ -15,9 +15,9 @@ datadir = '/home/pi/petrus/data/'
 graphdir = '/home/pi/petrus/graph/'
 
 
-def plotFile(filename):
+def plotFile(infilename, outfilename):
 
-	data = np.loadtxt(datadir + filename + ".csv", skiprows=1, delimiter=',')
+	data = np.loadtxt(datadir + infilename + ".csv", skiprows=1, delimiter=',')
 
 	dates = list()
 
@@ -27,11 +27,11 @@ def plotFile(filename):
 	plt.plot(dates, data[:, 5], 'o-')
 	plt.xlabel('Zeit')
 	plt.ylabel('Temperatur (C)')
-	plt.savefig(graphdir + filename + ".png")
+	plt.savefig(graphdir + outfilename + ".png")
 
 def plotToday():
 	today = datetime.datetime.utcnow()
 	todaystr = today.strftime("%d-%m-%Y")
-	plotFile(todaystr)
+	plotFile(todaystr, "daily")
 
 plotToday()
