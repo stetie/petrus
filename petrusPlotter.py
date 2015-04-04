@@ -12,7 +12,7 @@ from tzlocal import get_localzone
 tz = get_localzone()
 
 datadir = '/home/pi/petrus/data/'
-graphdir = '/home/pi/petrus/graph/'
+graphdir = '/var/www/graph/'
 
 
 def plotFile(infilename, outfilename):
@@ -33,5 +33,11 @@ def plotToday():
 	today = datetime.datetime.utcnow()
 	todaystr = today.strftime("%d-%m-%Y")
 	plotFile(todaystr, "daily")
+def plotYesterday():
+	today = datetime.datetime.utcnow()
+	oneday = datetime.timedelta(days=1)
+	yesterday = today - oneday
+	ydaystr = yesterday.strftime("%d-%m-%Y")
+	plotFile(ydaystr, ydaystr)
 
-plotToday()
+#plotToday()

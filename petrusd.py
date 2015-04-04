@@ -2,6 +2,7 @@
 
 import re, os, time
 from array import *
+import petrusPlotter
 
 def read_sensor(sensor_id):
 	value = 0
@@ -25,13 +26,16 @@ def writeCSVline(temp, datadir):
 	Min = time.strftime("%M", time.gmtime())
 	datestr = time.strftime("%d-%m-%Y", time.gmtime())
 	filename = datadir + datestr + ".csv"
+	newfile = False
 	if not (os.path.exists(filename)):
 		f = open(filename, 'w')
 		f.write("Year,Month,Day,Hour,Minute,Temperature\n")
+		newfile = True
 	else:
 		f = open(datadir + datestr + ".csv", 'a')
 	f.write("{0},{1},{2},{3},{4},{5}\n".format(Y, m, d, H, Min, temp))
 	f.close()
+	return newfile
 
 
 
@@ -49,7 +53,9 @@ while (True):
 			if n == (len(temps)-1):
 				# Mittelwert berechnen und speichern
 				mean = sum(temps)/float(len(temps))
-				writeCSVline(round(mean, 2), datadir)
+				if writeCSVline(round(mean, 2), datadir):
+					petrusPlotter.plotYesterday()
+				petrusPlotter.plotToday()
 			time.sleep(300)
 			
 
