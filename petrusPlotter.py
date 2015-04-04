@@ -13,16 +13,25 @@ tz = get_localzone()
 
 datadir = '/home/pi/petrus/data/'
 graphdir = '/home/pi/petrus/graph/'
-today = datetime.datetime.utcnow()
-todaystr = today.strftime("%d-%m-%Y")
-data = np.loadtxt(datadir + todaystr + ".csv", skiprows=1, delimiter=',')
 
-dates = list()
 
-for d in data:
-	dates.extend([datetime.datetime(int(d[0]), int(d[1]), int(d[2]), int(d[3]), int(d[4]), 0, tzinfo=pytz.utc).astimezone(tz)])
+def plotFile(filename):
 
-plt.plot(dates, data[:, 5], 'o-')
-plt.xlabel('Zeit')
-plt.ylabel('Temperatur (C)')
-plt.savefig(graphdir + todaystr + ".png")
+	data = np.loadtxt(datadir + filename + ".csv", skiprows=1, delimiter=',')
+
+	dates = list()
+
+	for d in data:
+		dates.extend([datetime.datetime(int(d[0]), int(d[1]), int(d[2]), int(d[3]), int(d[4]), 0, tzinfo=pytz.utc).astimezone(tz)])
+
+	plt.plot(dates, data[:, 5], 'o-')
+	plt.xlabel('Zeit')
+	plt.ylabel('Temperatur (C)')
+	plt.savefig(graphdir + filename + ".png")
+
+def plotToday():
+	today = datetime.datetime.utcnow()
+	todaystr = today.strftime("%d-%m-%Y")
+	plotFile(todaystr)
+
+plotToday()
