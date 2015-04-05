@@ -24,10 +24,14 @@ def plotFile(infilename, outfilename):
 	for d in data:
 		dates.extend([datetime.datetime(int(d[0]), int(d[1]), int(d[2]), int(d[3]), int(d[4]), 0, tzinfo=pytz.utc).astimezone(tz)])
 
+	plt.clf()
+	plt.cla()
 	plt.plot(dates, data[:, 5], 'o-')
 	plt.xlabel('Zeit')
 	plt.ylabel('Temperatur (C)')
 	plt.savefig(graphdir + outfilename + ".png")
+		
+#fig.close()
 
 def plotToday():
 	today = datetime.datetime.utcnow()
