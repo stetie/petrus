@@ -29,6 +29,9 @@ def plotFile(infilename, outfilename):
 	plt.plot(dates, data[:, 5], 'o-')
 	plt.xlabel('Zeit')
 	plt.ylabel('Temperatur (C)')
+	plt.gcf().autofmt_xdate()
+	plt.title('Temperaturverlauf vom ' + infilename)
+	plt.tight_layout()
 	plt.savefig(graphdir + outfilename + ".png")
 		
 #fig.close()
