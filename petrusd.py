@@ -55,7 +55,8 @@ while (True):
 				mean = sum(temps)/float(len(temps))
 				if writeCSVline(round(mean, 2), datadir):
 					petrusPlotter.plotYesterday()
-				petrusPlotter.plotToday()
+				else:
+					petrusPlotter.plotToday()
 			time.sleep(300)
 			
 
